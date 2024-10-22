@@ -56,7 +56,7 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
       <div style={styles.headerContainer}>
         <h2 style={styles.headerText}>Notes</h2>
       </div>
-      <div style={styles.container}>
+      <div style={styles.contentContainer}>
         <input
           type="text"
           value={newNoteTitle}
@@ -141,30 +141,36 @@ const styles = {
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
     width: '100%',
-    height: '100%',
+    minHeight: '100vh', // Ensure the page takes the full height
+    backgroundColor: '#cdcccd', // Use the same background color as Tasks and Home
   },
   headerContainer: {
     width: '100%',
-    backgroundColor: '#01234a', // Updated background color for header
+    backgroundColor: '#01234a', // Background color for the header
     padding: '20px 0',
     textAlign: 'center' as const,
     position: 'fixed' as const,
     top: 0,
     left: 0,
+    zIndex: 10, // Ensure the header stays on top
   },
   headerText: {
     margin: 0,
-    color: '#fff', // White text color
+    color: '#fff', // White text color for the header
     fontSize: '24px',
     fontWeight: 'bold' as const,
   },
-  container: {
+  contentContainer: {
+    flex: 1,
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
-    justifyContent: 'center' as const,
+    justifyContent: 'flex-start' as const, // Align content to the top
     padding: '20px',
-    marginTop: '80px', // Ensure space below the fixed header
+    backgroundColor: '#efeeef', // Use the content area background color
+    width: '100%',
+    minHeight: 'calc(100vh - 80px)', // Ensure full height minus the header
+    marginTop: '68px', // Increase to match the header's height
   },
   list: {
     listStyleType: 'none' as const,
