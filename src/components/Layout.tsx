@@ -14,13 +14,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <h1 style={styles.headerText}>My Todo App</h1>
       </header>
 
-      {/* Navbar */}
-      <Navbar />
-
       {/* Main content area where children components will be rendered */}
       <div style={styles.contentContainer}>
         {children}
       </div>
+
+      {/* Navbar */}
+      <Navbar />
     </div>
   );
 };
@@ -29,7 +29,7 @@ const styles = {
   layoutContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
-    height: '100vh',
+    minHeight: '100vh',
     backgroundColor: '#f4f4f4', // Background for the entire layout
   },
   header: {
@@ -45,10 +45,12 @@ const styles = {
   },
   contentContainer: {
     flex: 1,
+    backgroundColor: '#D3D3D3', // Gray background for the middle part
     display: 'flex',
     justifyContent: 'center' as const,
     alignItems: 'center' as const,
     padding: '20px',
+    width: '100%',
   },
 };
 

@@ -10,11 +10,38 @@ interface TasksProps {
 
 const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
   return (
-    <div>
-      <h2>Tasks</h2>
+    <div style={styles.pageContainer}>
+      <div style={styles.headerContainer}>
+        <h2 style={styles.headerText}>Tasks</h2>
+      </div>
       <TaskList tasks={tasks} pinTask={pinTask} updateTasks={updateTasks} />
     </div>
   );
+};
+
+const styles = {
+  pageContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center' as const,
+    width: '100%',
+    height: '100%',
+  },
+  headerContainer: {
+    width: '100%',
+    backgroundColor: '#01234a', // Background color for the header
+    padding: '20px 0',
+    textAlign: 'center' as const,
+    position: 'fixed' as const,
+    top: 0,
+    left: 0,
+  },
+  headerText: {
+    margin: 0,
+    color: '#fff', // Text color (white)
+    fontSize: '24px',
+    fontWeight: 'bold' as const,
+  },
 };
 
 export default Tasks;

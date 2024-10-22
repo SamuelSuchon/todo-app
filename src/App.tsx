@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Tasks from './pages/Tasks';
 import Notes from './pages/Notes'; // Import Notes
 import Navbar from './components/Navbar';
+import Settings from './pages/Settings'; // Import Settings
 
 export interface Task {
   id: number;
@@ -82,6 +83,12 @@ const App: React.FC = () => {
                   updateNotes={setNotes}
                   deleteNote={handleDeleteNote} // Pass delete functionality
                 />
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <Settings /> // Add the settings page route
               }
             />
           </Routes>

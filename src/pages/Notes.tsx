@@ -52,94 +52,119 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Notes</h2>
+    <div style={styles.pageContainer}>
+      <div style={styles.headerContainer}>
+        <h2 style={styles.headerText}>Notes</h2>
+      </div>
+      <div style={styles.container}>
+        <input
+          type="text"
+          value={newNoteTitle}
+          onChange={(e) => setNewNoteTitle(e.target.value)}
+          placeholder="Note Title"
+          style={styles.input}
+        />
+        <textarea
+          value={newNoteContent}
+          onChange={(e) => setNewNoteContent(e.target.value)}
+          placeholder="Note Content"
+          style={styles.textarea}
+        />
+        <button onClick={addNote} style={styles.button}>Add Note</button>
 
-      <input
-        type="text"
-        value={newNoteTitle}
-        onChange={(e) => setNewNoteTitle(e.target.value)}
-        placeholder="Note Title"
-        style={styles.input}
-      />
-      <textarea
-        value={newNoteContent}
-        onChange={(e) => setNewNoteContent(e.target.value)}
-        placeholder="Note Content"
-        style={styles.textarea}
-      />
-      <button onClick={addNote} style={styles.button}>Add Note</button>
+        <ul style={styles.list}>
+          {notes.map((note) => (
+            <li key={note.id} style={styles.listItem}>
+              <div style={styles.noteContainer}>
+                {editingNoteId === note.id ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={editingNoteTitle}
+                      onChange={(e) => setEditingNoteTitle(e.target.value)}
+                      placeholder="Edit Title"
+                      style={styles.input}
+                    />
+                    <textarea
+                      value={editingNoteContent}
+                      onChange={(e) => setEditingNoteContent(e.target.value)}
+                      placeholder="Edit Content"
+                      style={styles.textarea}
+                    />
+                    <button onClick={saveEditedNote} style={styles.button}>Save</button>
+                  </div>
+                ) : (
+                  <div>
+                    <h3>{note.title}</h3>
+                    <p>{note.content}</p>
+                    <p style={styles.timestamp}>Last edited: {note.timestamp}</p>
+                  </div>
+                )}
 
-      <ul style={styles.list}>
-        {notes.map((note) => (
-          <li key={note.id} style={styles.listItem}>
-            <div style={styles.noteContainer}>
-              {editingNoteId === note.id ? (
-                <div>
-                  <input
-                    type="text"
-                    value={editingNoteTitle}
-                    onChange={(e) => setEditingNoteTitle(e.target.value)}
-                    placeholder="Edit Title"
-                    style={styles.input}
+                <div style={styles.iconContainer}>
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    onClick={() => deleteNote(note.id)}
+                    style={styles.icon}
                   />
-                  <textarea
-                    value={editingNoteContent}
-                    onChange={(e) => setEditingNoteContent(e.target.value)}
-                    placeholder="Edit Content"
-                    style={styles.textarea}
+                  <FontAwesomeIcon
+                    icon={faEdit}
+                    onClick={() => {
+                      setEditingNoteId(note.id);
+                      setEditingNoteTitle(note.title);
+                      setEditingNoteContent(note.content);
+                    }}
+                    style={styles.icon}
                   />
-                  <button onClick={saveEditedNote} style={styles.button}>Save</button>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    onClick={() => pinNote(note)}
+                    style={{
+                      cursor: 'pointer',
+                      color: note.pinned ? 'gold' : 'gray',
+                      marginLeft: '10px',
+                    }}
+                  />
                 </div>
-              ) : (
-                <div>
-                  <h3>{note.title}</h3>
-                  <p>{note.content}</p>
-                  <p style={styles.timestamp}>Last edited: {note.timestamp}</p>
-                </div>
-              )}
-
-              {/* Icons for delete, edit, and pin */}
-              <div style={styles.iconContainer}>
-                <FontAwesomeIcon
-                  icon={faTrash}
-                  onClick={() => deleteNote(note.id)}
-                  style={styles.icon}
-                />
-                <FontAwesomeIcon
-                  icon={faEdit}
-                  onClick={() => {
-                    setEditingNoteId(note.id);
-                    setEditingNoteTitle(note.title);
-                    setEditingNoteContent(note.content);
-                  }}
-                  style={styles.icon}
-                />
-                <FontAwesomeIcon
-                  icon={faStar}
-                  onClick={() => pinNote(note)}
-                  style={{
-                    cursor: 'pointer',
-                    color: note.pinned ? 'gold' : 'gray',
-                    marginLeft: '10px',
-                  }}
-                />
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
 
 const styles = {
+  pageContainer: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center' as const,
+    width: '100%',
+    height: '100%',
+  },
+  headerContainer: {
+    width: '100%',
+    backgroundColor: '#01234a', // Updated background color for header
+    padding: '20px 0',
+    textAlign: 'center' as const,
+    position: 'fixed' as const,
+    top: 0,
+    left: 0,
+  },
+  headerText: {
+    margin: 0,
+    color: '#fff', // White text color
+    fontSize: '24px',
+    fontWeight: 'bold' as const,
+  },
   container: {
     display: 'flex',
     flexDirection: 'column' as const,
     alignItems: 'center' as const,
     justifyContent: 'center' as const,
     padding: '20px',
+    marginTop: '80px', // Ensure space below the fixed header
   },
   list: {
     listStyleType: 'none' as const,
