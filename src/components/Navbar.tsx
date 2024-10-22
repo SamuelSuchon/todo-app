@@ -1,7 +1,8 @@
+// src/components/Navbar.tsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faTasks, faStickyNote, faCog } from '@fortawesome/free-solid-svg-icons'; // Add the faCog for settings
+import { faHome, faTasks, faStickyNote, faCog } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar: React.FC = () => {
   return (
@@ -50,7 +51,7 @@ const styles = {
     bottom: 0,
     left: 0,
     width: '100%',
-    backgroundColor: '#333',
+    backgroundColor: '#01234a', // Updated navbar color
     padding: '10px 0',
     display: 'flex',
     justifyContent: 'space-around',
@@ -76,15 +77,12 @@ const styles = {
   navButton: {
     display: 'flex',
     flexDirection: 'column' as const,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center' as const,
+    justifyContent: 'center' as const,
     padding: '10px',
     cursor: 'pointer',
     transition: 'background-color 0.3s ease',
     borderRight: '1px solid #555',
-  },
-  navButtonLast: {
-    borderRight: 'none',
   },
   navText: {
     marginTop: '5px',
