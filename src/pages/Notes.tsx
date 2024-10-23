@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties } from 'react';
+import React, { useState, CSSProperties, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,6 +23,20 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
   const [editingNoteId, setEditingNoteId] = useState<number | null>(null);
   const [editingNoteTitle, setEditingNoteTitle] = useState<string>('');
   const [editingNoteContent, setEditingNoteContent] = useState<string>('');
+
+  // Default welcome note logic
+  useEffect(() => {
+    if (notes.length === 0) {
+      const defaultWelcomeNote: Note = {
+        id: 1,
+        title: 'Welcome!',
+        content: 'Start by adding your own notes, and pin them to keep them at the top.',
+        pinned: false,
+        timestamp: new Date().toLocaleString(),
+      };
+      updateNotes([defaultWelcomeNote]);
+    }
+  }, [notes, updateNotes]);
 
   const addNote = () => {
     if (newNoteTitle.trim() && newNoteContent.trim()) {
@@ -165,12 +179,12 @@ const styles: { [key: string]: CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'flex-start',
     padding: '20px',
-    paddingTop: '80px', // Adjusted paddingTop
+    paddingTop: '80px',
     backgroundColor: '#f8f9fa',
     width: '100%',
-    height: 'calc(100vh - 80px)', // Set fixed height
-    overflowY: 'auto', // Added overflowY
-    paddingBottom: '80px', // Add padding to the bottom to avoid overlap with the navbar
+    height: 'calc(100vh - 80px)',
+    overflowY: 'auto',
+    paddingBottom: '80px',
   },
   list: {
     listStyleType: 'none',
@@ -190,7 +204,7 @@ const styles: { [key: string]: CSSProperties } = {
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '400px',
-    maxWidth: '100%', // Ensure container doesn't exceed screen width
+    maxWidth: '100%',
     wordWrap: 'break-word',
   },
   input: {
