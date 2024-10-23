@@ -146,7 +146,6 @@ const styles = {
     alignItems: 'center' as const,
     width: '100%',
     minHeight: '100vh',
-    backgroundColor: '#cdcccd',
   },
   headerContainer: {
     width: '100%',
@@ -171,7 +170,7 @@ const styles = {
     justifyContent: 'flex-start' as const,
     alignItems: 'center' as const,
     padding: '20px',
-    backgroundColor: '#efeeef',
+    backgroundColor: '#f8f9fa',
     width: '100%',
     minHeight: 'calc(100vh - 80px)',
     marginTop: '68px',

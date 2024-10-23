@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, CSSProperties } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -96,7 +96,7 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
                 ) : (
                   <div>
                     <h3>{note.title}</h3>
-                    <p>{note.content}</p>
+                    <p style={styles.noteContent}>{note.content}</p>
                     <p style={styles.timestamp}>Last edited: {note.timestamp}</p>
                   </div>
                 )}
@@ -135,45 +135,45 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
   );
 };
 
-const styles = {
+const styles: { [key: string]: CSSProperties } = {
   pageContainer: {
     display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center' as const,
+    flexDirection: 'column',
     width: '100%',
-    minHeight: '100vh', // Ensure the page takes the full height
-    backgroundColor: '#cdcccd', // Use the same background color as Tasks and Home
+    minHeight: '100vh',
   },
   headerContainer: {
     width: '100%',
-    backgroundColor: '#01234a', // Background color for the header
+    backgroundColor: '#01234a',
     padding: '20px 0',
-    textAlign: 'center' as const,
-    position: 'fixed' as const,
+    textAlign: 'center',
+    position: 'fixed',
     top: 0,
     left: 0,
-    zIndex: 10, // Ensure the header stays on top
+    zIndex: 10,
   },
   headerText: {
     margin: 0,
-    color: '#fff', // White text color for the header
+    color: '#fff',
     fontSize: '24px',
-    fontWeight: 'bold' as const,
+    fontWeight: 'bold',
   },
   contentContainer: {
     flex: 1,
     display: 'flex',
-    flexDirection: 'column' as const,
-    alignItems: 'center' as const,
-    justifyContent: 'flex-start' as const, // Align content to the top
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
     padding: '20px',
-    backgroundColor: '#efeeef', // Use the content area background color
+    paddingTop: '80px', // Adjusted paddingTop
+    backgroundColor: '#f8f9fa',
     width: '100%',
-    minHeight: 'calc(100vh - 80px)', // Ensure full height minus the header
-    marginTop: '68px', // Increase to match the header's height
+    height: 'calc(100vh - 80px)', // Set fixed height
+    overflowY: 'auto', // Added overflowY
+    paddingBottom: '80px', // Add padding to the bottom to avoid overlap with the navbar
   },
   list: {
-    listStyleType: 'none' as const,
+    listStyleType: 'none',
     padding: 0,
     margin: '20px 0',
   },
@@ -190,6 +190,8 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '400px',
+    maxWidth: '100%', // Ensure container doesn't exceed screen width
+    wordWrap: 'break-word',
   },
   input: {
     padding: '10px',
@@ -212,6 +214,10 @@ const styles = {
   },
   icon: {
     cursor: 'pointer',
+  },
+  noteContent: {
+    wordBreak: 'break-word',
+    maxWidth: '400px',
   },
   timestamp: {
     fontSize: '12px',

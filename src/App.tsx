@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Tasks from './pages/Tasks';
-import Notes from './pages/Notes'; // Import Notes
+import Notes from './pages/Notes';
 import Navbar from './components/Navbar';
-import Settings from './pages/Settings'; // Import Settings
+import Settings from './pages/Settings';
 
 export interface Task {
   id: number;
@@ -24,22 +24,36 @@ export interface Note {
 const App: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, title: 'Buy groceries', completed: false, pinned: false },
-    { id: 2, title: 'Read a book', completed: false, pinned: false }
+    { id: 2, title: 'Read a book', completed: false, pinned: false },
   ]);
-  
+
   const [notes, setNotes] = useState<Note[]>([]);
 
   // Toggle pinning a task
   const handlePinTask = (taskToPin: Task) => {
-    const updatedTasks = tasks.map(task =>
+    const updatedTasks = tasks.map((task) =>
       task.id === taskToPin.id ? { ...task, pinned: !task.pinned } : task
     );
     setTasks(updatedTasks);
   };
 
+  // Complete a task
+  const completeTask = (taskId: number) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
+  };
+
+  // Delete a task
+  const deleteTask = (taskId: number) => {
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks);
+  };
+
   // Toggle pinning a note
   const handlePinNote = (noteToPin: Note) => {
-    const updatedNotes = notes.map(note =>
+    const updatedNotes = notes.map((note) =>
       note.id === noteToPin.id ? { ...note, pinned: !note.pinned } : note
     );
     setNotes(updatedNotes);
@@ -47,7 +61,7 @@ const App: React.FC = () => {
 
   // Delete a note
   const handleDeleteNote = (noteId: number) => {
-    const updatedNotes = notes.filter(note => note.id !== noteId);
+    const updatedNotes = notes.filter((note) => note.id !== noteId);
     setNotes(updatedNotes);
   };
 
@@ -61,10 +75,13 @@ const App: React.FC = () => {
               path="/"
               element={
                 <Home
-                  pinnedTasks={tasks.filter(task => task.pinned)}
-                  pinnedNotes={notes.filter(note => note.pinned)}
-                  unpinTask={handlePinTask} // Pass unpin functionality
+                  pinnedTasks={tasks.filter((task) => task.pinned)}
+                  pinnedNotes={notes.filter((note) => note.pinned)}
+                  unpinTask={handlePinTask}
                   unpinNote={handlePinNote}
+                  completeTask={completeTask}
+                  deleteTask={deleteTask}
+                  deleteNote={handleDeleteNote}  // Proper comment removed
                 />
               }
             />
@@ -81,16 +98,11 @@ const App: React.FC = () => {
                   notes={notes}
                   pinNote={handlePinNote}
                   updateNotes={setNotes}
-                  deleteNote={handleDeleteNote} // Pass delete functionality
+                  deleteNote={handleDeleteNote}
                 />
               }
             />
-            <Route
-              path="/settings"
-              element={
-                <Settings /> // Add the settings page route
-              }
-            />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </main>
       </div>

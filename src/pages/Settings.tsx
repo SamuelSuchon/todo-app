@@ -20,7 +20,6 @@ const styles = {
     alignItems: 'center' as const,
     width: '100%',
     minHeight: '100vh', // Ensure the page takes the full height
-    backgroundColor: '#cdcccd', // Same background color as the Tasks and Home pages
   },
   headerContainer: {
     width: '100%',
@@ -45,7 +44,7 @@ const styles = {
     alignItems: 'center' as const,
     justifyContent: 'flex-start' as const, // Align content to the top
     padding: '20px',
-    backgroundColor: '#efeeef', // Matching background color for the content area
+    backgroundColor: '#f8f9fa', // Matching background color for the content area
     width: '100%',
     minHeight: 'calc(100vh - 80px)', // Ensure full height minus the header
     marginTop: '68px', // To prevent overlap with the fixed header
