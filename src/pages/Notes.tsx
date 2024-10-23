@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties, useEffect } from 'react';
+import React, { useState, CSSProperties} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -24,20 +24,7 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
   const [editingNoteTitle, setEditingNoteTitle] = useState<string>('');
   const [editingNoteContent, setEditingNoteContent] = useState<string>('');
 
-  // Default welcome note logic
-  useEffect(() => {
-    if (notes.length === 0) {
-      const defaultWelcomeNote: Note = {
-        id: 1,
-        title: 'Welcome!',
-        content: 'Start by adding your own notes, and pin them to keep them at the top.',
-        pinned: false,
-        timestamp: new Date().toLocaleString(),
-      };
-      updateNotes([defaultWelcomeNote]);
-    }
-  }, [notes, updateNotes]);
-
+  // Funkcia na pridanie novej poznámky
   const addNote = () => {
     if (newNoteTitle.trim() && newNoteContent.trim()) {
       const newNote: Note = {
@@ -53,6 +40,7 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
     }
   };
 
+  // Funkcia na uloženie upravenej poznámky
   const saveEditedNote = () => {
     const updatedNotes = notes.map((note) =>
       note.id === editingNoteId
@@ -67,54 +55,62 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
 
   return (
     <div style={styles.pageContainer}>
+      {/* Hlavička stránky */}
       <div style={styles.headerContainer}>
-        <h2 style={styles.headerText}>Notes</h2>
+        <h2 style={styles.headerText}>Poznámky</h2>
       </div>
+
+      {/* Obsah stránky */}
       <div style={styles.contentContainer}>
+        {/* Vstupy pre pridanie novej poznámky */}
         <input
           type="text"
           value={newNoteTitle}
           onChange={(e) => setNewNoteTitle(e.target.value)}
-          placeholder="Note Title"
+          placeholder="Názov poznámky"
           style={styles.input}
         />
         <textarea
           value={newNoteContent}
           onChange={(e) => setNewNoteContent(e.target.value)}
-          placeholder="Note Content"
+          placeholder="Obsah poznámky"
           style={styles.textarea}
         />
-        <button onClick={addNote} style={styles.button}>Add Note</button>
+        <button onClick={addNote} style={styles.button}>Pridať poznámku</button>
 
+        {/* Zoznam poznámok */}
         <ul style={styles.list}>
           {notes.map((note) => (
             <li key={note.id} style={styles.listItem}>
               <div style={styles.noteContainer}>
                 {editingNoteId === note.id ? (
                   <div>
+                    {/* Editovanie poznámky */}
                     <input
                       type="text"
                       value={editingNoteTitle}
                       onChange={(e) => setEditingNoteTitle(e.target.value)}
-                      placeholder="Edit Title"
+                      placeholder="Upraviť názov"
                       style={styles.input}
                     />
                     <textarea
                       value={editingNoteContent}
                       onChange={(e) => setEditingNoteContent(e.target.value)}
-                      placeholder="Edit Content"
+                      placeholder="Upraviť obsah"
                       style={styles.textarea}
                     />
-                    <button onClick={saveEditedNote} style={styles.button}>Save</button>
+                    <button onClick={saveEditedNote} style={styles.button}>Uložiť</button>
                   </div>
                 ) : (
                   <div>
+                    {/* Zobrazenie názvu a obsahu poznámky */}
                     <h3>{note.title}</h3>
                     <p style={styles.noteContent}>{note.content}</p>
-                    <p style={styles.timestamp}>Last edited: {note.timestamp}</p>
+                    <p style={styles.timestamp}>Naposledy upravené: {note.timestamp}</p>
                   </div>
                 )}
 
+                {/* Ikony pre akcie s poznámkou */}
                 <div style={styles.iconContainer}>
                   <FontAwesomeIcon
                     icon={faTrash}
@@ -150,12 +146,14 @@ const Notes: React.FC<NotesProps> = ({ notes, pinNote, updateNotes, deleteNote }
 };
 
 const styles: { [key: string]: CSSProperties } = {
+  // Štýly pre hlavný kontajner stránky
   pageContainer: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     minHeight: '100vh',
   },
+  // Štýly pre hlavičku stránky
   headerContainer: {
     width: '100%',
     backgroundColor: '#01234a',
@@ -166,12 +164,14 @@ const styles: { [key: string]: CSSProperties } = {
     left: 0,
     zIndex: 10,
   },
+  // Štýly pre text hlavičky
   headerText: {
     margin: 0,
     color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold',
   },
+  // Štýly pre hlavný obsah stránky
   contentContainer: {
     flex: 1,
     display: 'flex',
@@ -186,11 +186,13 @@ const styles: { [key: string]: CSSProperties } = {
     overflowY: 'auto',
     paddingBottom: '80px',
   },
+  // Štýly pre zoznam poznámok
   list: {
     listStyleType: 'none',
     padding: 0,
     margin: '20px 0',
   },
+  // Štýly pre jednotlivú položku zoznamu poznámok
   listItem: {
     display: 'flex',
     alignItems: 'center',
@@ -199,6 +201,7 @@ const styles: { [key: string]: CSSProperties } = {
     borderBottom: '1px solid #ccc',
     padding: '10px 0',
   },
+  // Štýly pre kontajner poznámky
   noteContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -207,32 +210,39 @@ const styles: { [key: string]: CSSProperties } = {
     maxWidth: '100%',
     wordWrap: 'break-word',
   },
+  // Štýly pre vstupné pole
   input: {
     padding: '10px',
     marginBottom: '10px',
     width: '300px',
   },
+  // Štýly pre textové pole
   textarea: {
     padding: '10px',
     marginBottom: '10px',
     width: '300px',
     height: '100px',
   },
+  // Štýly pre tlačidlo
   button: {
     padding: '5px 10px',
     marginBottom: '20px',
   },
+  // Štýly pre kontajner s ikonami
   iconContainer: {
     display: 'flex',
     gap: '10px',
   },
+  // Štýly pre ikony
   icon: {
     cursor: 'pointer',
   },
+  // Štýly pre obsah poznámky
   noteContent: {
     wordBreak: 'break-word',
     maxWidth: '400px',
   },
+  // Štýly pre časovú pečiatku poznámky
   timestamp: {
     fontSize: '12px',
     color: 'gray',

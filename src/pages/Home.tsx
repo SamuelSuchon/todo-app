@@ -24,30 +24,30 @@ const Home: React.FC<HomeProps> = ({
 }) => {
   return (
     <div style={styles.pageContainer}>
-      {/* Header */}
+      {/* Hlavička */}
       <div style={styles.headerContainer}>
-        <h2 style={styles.headerText}>Home</h2>
+        <h2 style={styles.headerText}>Domov</h2>
       </div>
 
-      {/* Welcome Message */}
+      {/* Vitajúcia správa */}
       <div style={styles.welcomeContainer}>
-        <h2 style={styles.welcomeText}>Welcome to Your Personal Organizer</h2>
+        <h2 style={styles.welcomeText}>Vitajte vo Vašom Osobnom Organizéri</h2>
       </div>
 
-      {/* Content */}
+      {/* Obsah */}
       <div style={styles.contentContainer}>
-        {/* App Explanation */}
+        {/* Vysvetlenie aplikácie */}
         <div style={styles.introContainer}>
           <h3 style={styles.introText}>
-            Organize your life effortlessly by managing your tasks and notes. Pin your important tasks and notes to keep them at the top!
+            Organizujte svoj život jednoducho správou svojich úloh a poznámok. Pripnite si dôležité úlohy a poznámky, aby ste ich mali na domovskej stránke!
           </h3>
         </div>
 
-        {/* Pinned Tasks Section */}
+        {/* Sekcia pripnutých úloh */}
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitle}>Pinned Tasks</h2>
+          <h2 style={styles.sectionTitle}>Pripnuté úlohy</h2>
           {pinnedTasks.length === 0 ? (
-            <p style={styles.emptyMessage}>No tasks pinned. Pin important tasks to keep them at the top!</p>
+            <p style={styles.emptyMessage}>Žiadne úlohy nie sú pripnuté. Pripnite dôležité úlohy, aby ste ich mali na domovskej stránke!</p>
           ) : (
             <div style={styles.cardsContainer}>
               {pinnedTasks.map(task => (
@@ -55,6 +55,7 @@ const Home: React.FC<HomeProps> = ({
                   key={task.id}
                   style={styles.card}
                 >
+                  {/* Názov úlohy, preškrtnutie */}
                   <h3
                     style={{
                       ...styles.cardTitle,
@@ -63,24 +64,25 @@ const Home: React.FC<HomeProps> = ({
                   >
                     {task.title}
                   </h3>
+                  {/* Tlačidlá pre akcie s úlohou */}
                   <div style={styles.buttonGroup}>
                     <button
                       style={styles.pinButton}
                       onClick={() => completeTask(task.id)}
                     >
-                      <FontAwesomeIcon icon={faCheck} /> Complete
+                      <FontAwesomeIcon icon={faCheck} /> Dokončiť
                     </button>
                     <button
                       style={styles.pinButton}
                       onClick={() => unpinTask(task)}
                     >
-                      <FontAwesomeIcon icon={faThumbtack} /> Unpin
+                      <FontAwesomeIcon icon={faThumbtack} /> Odopnúť
                     </button>
                     <button
                       style={styles.pinButton}
                       onClick={() => deleteTask(task.id)}
                     >
-                      <FontAwesomeIcon icon={faTrash} /> Delete
+                      <FontAwesomeIcon icon={faTrash} /> Vymazať
                     </button>
                   </div>
                 </div>
@@ -89,30 +91,32 @@ const Home: React.FC<HomeProps> = ({
           )}
         </div>
 
-        {/* Pinned Notes Section */}
+        {/* Sekcia pripnutých poznámok */}
         <div style={styles.sectionContainer}>
-          <h2 style={styles.sectionTitle}>Pinned Notes</h2>
+          <h2 style={styles.sectionTitle}>Pripnuté poznámky</h2>
           {pinnedNotes.length === 0 ? (
-            <p style={styles.emptyMessage}>No notes pinned. Pin important notes to keep them at the top!</p>
+            <p style={styles.emptyMessage}>Žiadne poznámky nie sú pripnuté. Pripnite dôležité poznámky, aby ste ich mali na domovskej stránke!</p>
           ) : (
             <div style={styles.cardsContainer}>
               {pinnedNotes.map(note => (
                 <div key={note.id} style={styles.card}>
+                  {/* Názov poznámky a obsah */}
                   <h3 style={styles.cardTitle}>{note.title}</h3>
                   <p style={styles.cardContent}>{note.content}</p>
-                  <p style={styles.timestamp}>Pinned at: {note.timestamp}</p>
+                  <p style={styles.timestamp}>Pripnuté o: {note.timestamp}</p>
+                  {/* Tlačidlá pre akcie s poznámkou */}
                   <div style={styles.buttonGroup}>
                     <button
                       style={styles.pinButton}
                       onClick={() => unpinNote(note)}
                     >
-                      <FontAwesomeIcon icon={faThumbtack} /> Unpin
+                      <FontAwesomeIcon icon={faThumbtack} /> Odopnúť
                     </button>
                     <button
                       style={styles.pinButton}
                       onClick={() => deleteNote(note.id)}
                     >
-                      <FontAwesomeIcon icon={faTrash} /> Delete
+                      <FontAwesomeIcon icon={faTrash} /> Vymazať
                     </button>
                   </div>
                 </div>
@@ -126,6 +130,7 @@ const Home: React.FC<HomeProps> = ({
 };
 
 const styles = {
+  // hlavný kontajner stránky
   pageContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -134,6 +139,7 @@ const styles = {
     minHeight: '100vh',
     backgroundColor: '#f8f9fa',
   },
+  // Štýly pre hlavičku
   headerContainer: {
     width: '100%',
     backgroundColor: '#01234a',
@@ -145,21 +151,25 @@ const styles = {
     zIndex: 10,
     boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
   },
+  // text hlavičky
   headerText: {
     margin: 0,
     color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold' as const,
   },
+
   welcomeContainer: {
     marginTop: '100px',
     textAlign: 'center' as const,
   },
+
   welcomeText: {
     fontSize: '28px',
     fontWeight: 'bold' as const,
     color: '#01234a',
   },
+  // hlavný kontajner obsahu
   contentContainer: {
     flex: 1,
     display: 'flex',
@@ -169,32 +179,38 @@ const styles = {
     backgroundColor: '#f8f9fa',
     width: '100%',
   },
+  // kontajner s vysvetlením aplikácie
   introContainer: {
     maxWidth: '800px',
     marginBottom: '40px',
     textAlign: 'center' as const,
   },
+  // vysvetľovací text
   introText: {
     fontSize: '18px',
     color: '#333',
   },
+  // Štýly pre sekcie (pripnuté úlohy a poznámky)
   sectionContainer: {
     width: '100%',
     maxWidth: '800px',
     marginBottom: '40px',
     textAlign: 'center' as const,
   },
+  // názvy sekcií
   sectionTitle: {
     fontSize: '22px',
     fontWeight: 'bold' as const,
     color: '#01234a',
     marginBottom: '20px',
   },
+  // prázdne správy, keď nie sú pripnuté úlohy alebo poznámky
   emptyMessage: {
     fontSize: '16px',
     color: '#777',
     textAlign: 'center' as const,
   },
+  // kontajner s kartami (zobrazenie úloh a poznámok)
   cardsContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -202,6 +218,7 @@ const styles = {
     alignItems: 'center' as const,
     gap: '20px',
   },
+  // jednotlivé karty
   card: {
     backgroundColor: '#fff',
     padding: '20px',
@@ -213,23 +230,27 @@ const styles = {
     transition: 'transform 0.2s ease',
     cursor: 'pointer',
     textAlign: 'center' as const,
-    wordWrap: 'break-word' as const,  // Ensure text wrapping within the card
+    wordWrap: 'break-word' as const,  // Zabezpečiť zalomenie textu v karte
   },
+  // názov karty
   cardTitle: {
     fontSize: '18px',
     marginBottom: '10px',
     color: '#01234a',
   },
+  // obsah karty
   cardContent: {
     fontSize: '14px',
     color: '#555',
-    wordBreak: 'break-word' as const,  // Fix long word overflow
-    maxWidth: '100%',  // Make sure it doesn't go beyond the card width
+    wordBreak: 'break-word' as const,  // Oprava pretekania dlhých slov
+    maxWidth: '100%',  // Zabezpečiť, aby nepresahovalo šírku karty
   },
+  // časovú pečiatku pripnutých poznámok
   timestamp: {
     fontSize: '12px',
     color: '#777',
   },
+  // tlačidlá (pripnutie, dokončenie, vymazanie)
   pinButton: {
     backgroundColor: '#ff6f61',
     border: 'none',
@@ -241,6 +262,7 @@ const styles = {
     minWidth: '100px',
     textAlign: 'center' as 'center',
   },
+  // kontajner s tlačidlami
   buttonGroup: {
     display: 'flex',
     justifyContent: 'center',

@@ -22,14 +22,24 @@ export interface Note {
 }
 
 const App: React.FC = () => {
+  // Definícia počiatočných úloh
   const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, title: 'Buy groceries', completed: false, pinned: false },
-    { id: 2, title: 'Read a book', completed: false, pinned: false },
+    { id: 1, title: 'Kúpiť potraviny', completed: false, pinned: false },
+    { id: 2, title: 'Prečítať knihu', completed: false, pinned: false },
   ]);
 
-  const [notes, setNotes] = useState<Note[]>([]);
+  // Definícia počiatočných poznámok
+  const [notes, setNotes] = useState<Note[]>([
+    {
+      id: 1,
+      title: 'Welcome!',
+      content: 'Začnite pridávaním vlastných poznámok a pripnite ich, aby zostali na vrchu.',
+      pinned: false,
+      timestamp: new Date().toLocaleString(),
+    },
+  ]);
 
-  // Toggle pinning a task
+  // Funkcia na pripnutie alebo odopnutie úlohy
   const handlePinTask = (taskToPin: Task) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskToPin.id ? { ...task, pinned: !task.pinned } : task
@@ -37,7 +47,7 @@ const App: React.FC = () => {
     setTasks(updatedTasks);
   };
 
-  // Complete a task
+  // Funkcia na dokončenie úlohy
   const completeTask = (taskId: number) => {
     const updatedTasks = tasks.map((task) =>
       task.id === taskId ? { ...task, completed: !task.completed } : task
@@ -45,13 +55,13 @@ const App: React.FC = () => {
     setTasks(updatedTasks);
   };
 
-  // Delete a task
+  // Funkcia na vymazanie úlohy
   const deleteTask = (taskId: number) => {
     const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
 
-  // Toggle pinning a note
+  // Funkcia na pripnutie alebo odopnutie poznámky
   const handlePinNote = (noteToPin: Note) => {
     const updatedNotes = notes.map((note) =>
       note.id === noteToPin.id ? { ...note, pinned: !note.pinned } : note
@@ -59,7 +69,7 @@ const App: React.FC = () => {
     setNotes(updatedNotes);
   };
 
-  // Delete a note
+  // Funkcia na vymazanie poznámky
   const handleDeleteNote = (noteId: number) => {
     const updatedNotes = notes.filter((note) => note.id !== noteId);
     setNotes(updatedNotes);
@@ -71,6 +81,7 @@ const App: React.FC = () => {
         <Navbar />
         <main>
           <Routes>
+            {/* Domovská stránka */}
             <Route
               path="/"
               element={
@@ -81,16 +92,18 @@ const App: React.FC = () => {
                   unpinNote={handlePinNote}
                   completeTask={completeTask}
                   deleteTask={deleteTask}
-                  deleteNote={handleDeleteNote}  // Proper comment removed
+                  deleteNote={handleDeleteNote}  // Vymazanie poznámky
                 />
               }
             />
+            {/* Stránka pre úlohy */}
             <Route
               path="/tasks"
               element={
                 <Tasks tasks={tasks} pinTask={handlePinTask} updateTasks={setTasks} />
               }
             />
+            {/* Stránka pre poznámky */}
             <Route
               path="/notes"
               element={
@@ -102,6 +115,7 @@ const App: React.FC = () => {
                 />
               }
             />
+            {/* Stránka pre nastavenia */}
             <Route path="/settings" element={<Settings />} />
           </Routes>
         </main>

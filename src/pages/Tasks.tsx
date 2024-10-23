@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { Task } from '../App'; // Assuming the Task interface is defined in App.tsx
+import { Task } from '../App'; // Predpokladáme, že rozhranie Task je definované v súbore App.tsx
 
 interface TasksProps {
   tasks: Task[];
@@ -14,7 +14,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editingTaskTitle, setEditingTaskTitle] = useState<string>('');
 
-  // Add a new task
+  // Pridanie novej úlohy
   const addTask = () => {
     if (newTaskTitle.trim()) {
       const newTask: Task = {
@@ -28,7 +28,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
     }
   };
 
-  // Save the edited task
+  // Uloženie upravenej úlohy
   const saveEditedTask = () => {
     const updatedTasks = tasks.map((task) =>
       task.id === editingTaskId ? { ...task, title: editingTaskTitle } : task
@@ -38,7 +38,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
     setEditingTaskTitle('');
   };
 
-  // Handle "Enter" key press to add or save a task
+  // Spracovanie stlačenia klávesy "Enter" na pridanie alebo uloženie úlohy
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       if (editingTaskId !== null) {
@@ -49,7 +49,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
     }
   };
 
-  // Mark task as completed
+  // Označenie úlohy ako dokončenej
   const toggleTaskCompletion = (id: number) => {
     const updatedTasks = tasks.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
@@ -59,26 +59,28 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
 
   return (
     <div style={styles.pageContainer}>
+      {/* Hlavička stránky */}
       <div style={styles.headerContainer}>
-        <h2 style={styles.headerText}>Tasks</h2>
+        <h2 style={styles.headerText}>Úlohy</h2>
       </div>
+      {/* Obsah stránky */}
       <div style={styles.contentContainer}>
-        {/* Input field to add new task */}
+        {/* Vstup pre pridanie novej úlohy */}
         <input
           type="text"
           value={newTaskTitle}
           onChange={(e) => setNewTaskTitle(e.target.value)}
-          onKeyPress={handleKeyPress} // Trigger adding task on "Enter" key press
-          placeholder="Enter a new task"
+          onKeyPress={handleKeyPress} // Pridanie úlohy po stlačení "Enter"
+          placeholder="Zadajte novú úlohu"
           style={styles.input}
         />
-        <button onClick={addTask} style={styles.button}>Add Task</button>
+        <button onClick={addTask} style={styles.button}>Pridať úlohu</button>
 
         <ul style={styles.list}>
           {tasks.map((task) => (
             <li key={task.id} style={styles.listItem}>
               <div style={styles.taskContainer}>
-                {/* Checkbox for task completion */}
+                {/* Zaškrtávacie pole pre dokončenie úlohy */}
                 <input
                   type="checkbox"
                   checked={task.completed}
@@ -86,18 +88,18 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
                   style={styles.checkbox}
                 />
 
-                {/* Task title with strikethrough if completed */}
+                {/* Preškrtnutie názvu úlohy, ak je dokončená */}
                 {editingTaskId === task.id ? (
                   <div>
                     <input
                       type="text"
                       value={editingTaskTitle}
                       onChange={(e) => setEditingTaskTitle(e.target.value)}
-                      onKeyPress={handleKeyPress} // Trigger save on "Enter" key press
-                      placeholder="Edit Task Title"
+                      onKeyPress={handleKeyPress} // uloženie po stlačení "Enter"
+                      placeholder="Upraviť názov úlohy"
                       style={styles.input}
                     />
-                    <button onClick={saveEditedTask} style={styles.button}>Save</button>
+                    <button onClick={saveEditedTask} style={styles.button}>Uložiť</button>
                   </div>
                 ) : (
                   <span style={task.completed ? styles.completedTask : styles.taskTitle}>
@@ -105,7 +107,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
                   </span>
                 )}
 
-                {/* Action icons (pin, edit, delete) */}
+                {/* Akčné ikony (pripnutie, úprava, vymazanie) */}
                 <div style={styles.iconContainer}>
                   <FontAwesomeIcon
                     icon={faEdit}
@@ -140,6 +142,7 @@ const Tasks: React.FC<TasksProps> = ({ tasks, pinTask, updateTasks }) => {
 };
 
 const styles = {
+  // hlavný kontajner stránky
   pageContainer: {
     display: 'flex',
     flexDirection: 'column' as const,
@@ -147,6 +150,7 @@ const styles = {
     width: '100%',
     minHeight: '100vh',
   },
+  // hlavička stránky
   headerContainer: {
     width: '100%',
     backgroundColor: '#01234a',
@@ -157,12 +161,14 @@ const styles = {
     left: 0,
     zIndex: 10,
   },
+  // text hlavičky
   headerText: {
     margin: 0,
     color: '#fff',
     fontSize: '24px',
     fontWeight: 'bold' as const,
   },
+  // hlavný obsah stránky
   contentContainer: {
     flex: 1,
     display: 'flex',
@@ -174,8 +180,9 @@ const styles = {
     width: '100%',
     minHeight: 'calc(100vh - 80px)',
     marginTop: '68px',
-    paddingBottom: '80px', // Add padding to the bottom to avoid overlap with the navbar
+    paddingBottom: '80px', // Pridanie paddingu dole, aby sa zabránilo prekrývaniu s navigačnou lištou
   },
+  // zoznam úloh
   list: {
     listStyleType: 'none' as const,
     padding: 0,
@@ -183,6 +190,7 @@ const styles = {
     width: '100%',
     maxWidth: '600px',
   },
+  // Štýly pre jednotlivú položku zoznamu úloh
   listItem: {
     display: 'flex',
     alignItems: 'center',
@@ -191,35 +199,43 @@ const styles = {
     borderBottom: '1px solid #ccc',
     padding: '10px 0',
   },
+  // kontajner úlohy
   taskContainer: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '400px',
   },
+  // vstupné pole
   input: {
     padding: '10px',
     marginBottom: '10px',
     width: '300px',
   },
+  // Štýly pre tlačidlo
   button: {
     padding: '5px 10px',
     marginBottom: '20px',
   },
+  // Štýly pre ikony
   iconContainer: {
     display: 'flex',
     gap: '10px',
   },
+  // Štýly pre ikony
   icon: {
     cursor: 'pointer',
   },
+  // zaškrtávacie pole
   checkbox: {
     marginRight: '10px',
   },
+  // dokončená úlohá (preškrtnutá)
   completedTask: {
     textDecoration: 'line-through',
     color: '#888',
   },
+  // názov úlohy
   taskTitle: {
     fontSize: '16px',
     fontWeight: 'bold' as const,
