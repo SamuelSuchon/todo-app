@@ -1,6 +1,5 @@
-// src/components/Navbar.tsx
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faTasks, faStickyNote, faCog } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,36 +8,60 @@ const Navbar: React.FC = () => {
     <nav style={styles.navbar}>
       <ul style={styles.navList}>
         <li style={styles.navItem}>
-          <Link to="/" style={styles.navLink}>
+          <NavLink 
+            to="/" 
+            style={({ isActive }) => ({
+              ...styles.navLink,
+              color: isActive ? '#FFD700' : '#fff', // Highlight active link
+            })}
+          >
             <div style={styles.navButton}>
               <FontAwesomeIcon icon={faHome} size="2x" />
               <span style={styles.navText}>Home</span>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li style={styles.navItem}>
-          <Link to="/tasks" style={styles.navLink}>
+          <NavLink 
+            to="/tasks" 
+            style={({ isActive }) => ({
+              ...styles.navLink,
+              color: isActive ? '#FFD700' : '#fff',
+            })}
+          >
             <div style={styles.navButton}>
               <FontAwesomeIcon icon={faTasks} size="2x" />
               <span style={styles.navText}>Tasks</span>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li style={styles.navItem}>
-          <Link to="/notes" style={styles.navLink}>
+          <NavLink 
+            to="/notes" 
+            style={({ isActive }) => ({
+              ...styles.navLink,
+              color: isActive ? '#FFD700' : '#fff',
+            })}
+          >
             <div style={styles.navButton}>
               <FontAwesomeIcon icon={faStickyNote} size="2x" />
               <span style={styles.navText}>Notes</span>
             </div>
-          </Link>
+          </NavLink>
         </li>
         <li style={styles.navItem}>
-          <Link to="/settings" style={styles.navLink}>
+          <NavLink 
+            to="/settings" 
+            style={({ isActive }) => ({
+              ...styles.navLink,
+              color: isActive ? '#FFD700' : '#fff',
+            })}
+          >
             <div style={styles.navButton}>
               <FontAwesomeIcon icon={faCog} size="2x" />
               <span style={styles.navText}>Settings</span>
             </div>
-          </Link>
+          </NavLink>
         </li>
       </ul>
     </nav>
